@@ -1,7 +1,7 @@
 @import "reset.scss";
 @import "variables/global.css";
 @import "themes/normal.css";
-@import "themes/normal.css";
+@import "themes/dark.css";
 body {
     font: var(--font-m);
     color: var(--primary-color);
