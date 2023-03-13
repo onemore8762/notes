@@ -16,7 +16,6 @@ export const Input = memo((props: InputProps) => {
         value,
         onChange,
         type = 'text',
-        placeholder,
         ...otherProps
     } = props
 

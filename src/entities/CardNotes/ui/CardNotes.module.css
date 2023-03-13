@@ -1,0 +1,29 @@
+.CardNotes{
+    align-self: flex-start;
+    height: auto;
+    border-radius: 8px;
+    position: relative;
+    width: 240px;
+    overflow: hidden;
+    min-height:104px;
+    margin: 10px;
+    border: 1px solid gray;
+}
+
+.name{
+    padding: 12px 16px 0;
+    font-weight: bold;
+}
+
+.description{
+    padding: 4px 16px 12px;
+}
+
+.buttonDelete{
+    border-top-right-radius: 8px;
+    position: absolute;
+    padding: 2px 8px;
+
+    top:0;
+    right: 0;
+}

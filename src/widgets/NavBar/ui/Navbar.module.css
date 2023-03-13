@@ -4,16 +4,16 @@
     background: var(--bg-color);
     display: flex;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 50px;
     align-items: center;
     border-top: 1px solid rgba(128, 128, 128, 0.51);
     border-bottom: 1px solid rgba(128, 128, 128, 0.51);
 }
 
-.links {
-    margin-left: auto;
-}
-
-.mainLink {
-    margin-right: 15px;
+.header, .right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    font-size: var(--font-size-l);
 }

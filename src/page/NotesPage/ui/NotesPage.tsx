@@ -1,71 +1,62 @@
-import {Input} from "../../../shared/ui/Input/Input";
-import {useState, KeyboardEvent, useEffect} from "react";
-
-
-interface Notes {
-    // name: string
-    // description: string
-    id: number
-    text: string
-
-}
+import React, {useCallback, useEffect, useState} from "react";
+import {InputNotes} from "features/InputNotes/ui/InputNotes/InputNotes";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "app/providers/StoreProvider/config/store";
+import {notesActions} from "entities/Notes";
+import {CardNotes} from "entities/CardNotes/ui/CardNotes";
+import cls from './NotesPage.module.css'
+import {Note} from "../../../entities/Notes/model/types/notesSchema";
+import {InputNodesModal} from "../../../features/InputNotes/ui/InputNotesModal/InputNotesModal";
+import {inputActions} from "../../../features/InputNotes";
 
 export const NotesPage = () => {
-    const [state, setState] = useState('')
-    const [lists, setLists] = useState<Notes[]>([])
-    const [isFocused, setIsFocused] = useState(false)
 
-    const onBlur = (): void => {
-        setIsFocused(false)
-    }
+    const notes = useSelector((state: AppRootState) => state.notes.notes)
+    const dispatch = useDispatch()
 
-    const onFocus = (): void => {
-        setIsFocused(true)
-    }
-    const setContent = () => {
-        if(state.trim() !== ''){
-            const newLists = [...lists, {text: state, id: new Date().getTime()}]
-            setState('')
-            setLists(newLists)
-            localStorage.setItem('lists', JSON.stringify(newLists) )
-        }
-
-    }
-    const onBlurHandler = () => {
-        setContent()
-        onBlur()
-    }
-    const onEnter =(e: KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === 'Enter'){
-            setContent()
-        }
-    }
     useEffect(() => {
-        if(lists.length === 0){
-           const a = localStorage.getItem('lists')
-            if(a){
-                setLists(JSON.parse(a))
-            }
+        const notesLocalStorage = localStorage.getItem('notes')
+        if (notesLocalStorage && JSON.parse(notesLocalStorage).length !== 0) {
+            dispatch(notesActions.initialNotes(JSON.parse(notesLocalStorage)))
+        } else {
+            dispatch(notesActions.initialNotes([{
+                id: 1,
+                name: 'Заголовок',
+                description: 'Тестовое описание',
+                image: '',
+                color: 3
+            }]))
         }
-    },[])
+    }, [])
 
+    useEffect(() => {
+        localStorage.setItem('notes', JSON.stringify(notes))
+    }, [notes])
+
+    const onDeleteHandler = useCallback((id: number) => {
+        dispatch(notesActions.deleteNotes(id))
+    }, [])
+
+    const onClickHandler = useCallback((value: Note) => {
+        setModal({isOpen: true, data: value})
+    }, [])
+    const [modal, setModal] = useState({isOpen: false, data: {} as Note})
     return (
         <>
-
-            <div style={{width: 300, margin: '0 auto', background: "gray"}}>
-                <Input onChange={setState}
-                       onKeyDown={onEnter}
-                       value={state}
-                       onBlur={onBlurHandler}
-                       onFocus={onFocus}
-                />
-            </div>
-            {isFocused && 'isFocus'}
-            <div style={{display: 'flex', flexWrap: "wrap", justifyContent: 'center'}}>
-                {lists.map(el =>
-                    <div key={el.id} style={{width: 300, height: 300, background: "gray", margin: 10}}>{el.text}</div>
+            <InputNotes/>
+            <div className={cls.content}>
+                {notes.map(el =>
+                    <CardNotes note={el} key={el.id} onDelete={onDeleteHandler} onClick={onClickHandler}/>
                 )}
             </div>
+            {modal.isOpen && <InputNodesModal isOpen={modal.isOpen}
+                                        initialState={modal.data}
+                                        onClose={() => {
+                                            setModal({...modal, isOpen: false})
+                                            dispatch(inputActions.clearInput())
+                                        }}/>
+            }
+
         </>
     );
 };

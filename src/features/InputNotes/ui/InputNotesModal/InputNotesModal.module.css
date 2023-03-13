@@ -1,0 +1,36 @@
+.InputNotesModal {
+    position: relative;
+    background-color: var(--bg-color);
+    margin: 33px auto;
+    border-radius: 8px;
+    width: 600px;
+    min-height: 136px;
+    max-height: 638px;
+    border: 1px solid gray;
+    box-shadow: var(--box-shadow);
+}
+
+.content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    max-height: 590px;
+}
+
+.header, .description {
+    padding: 10px 15px;
+}
+
+.header {
+    font-weight: bold;
+}
+.buttonDelete{
+    background-color: var(--bg-color);
+    right: 5px;
+    bottom: 10px;
+    position: absolute;
+}
+
+.wrapperImage{
+    position: relative;
+}
