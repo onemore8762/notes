@@ -1,10 +1,9 @@
-import React, { type ReactElement, Suspense } from 'react'
-import {PageLoader} from "../../../../shared/ui/PageLoader/PageLoader";
+import React, {Suspense} from 'react'
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 import {Route, Routes} from "react-router-dom";
-import {routeConfig} from "../../../../shared/config/routeConfig/routeConfig";
+import {routeConfig} from "shared/config/routeConfig/routeConfig";
 
-export const AppRouter = (): ReactElement => {
-    console.log(routeConfig)
+export const AppRouter = () => {
     return (
         <Suspense fallback={<PageLoader/>}>
             <Routes>

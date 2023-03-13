@@ -1,8 +1,8 @@
 import React, {Suspense} from 'react';
-import {Navbar} from "../widgets/NavBar/Navbar";
+import {Navbar} from "widgets/NavBar";
 import {AppRouter} from "./providers/router";
 
-function App() {
+export const App = () => {
     return (
         <div className={'app'}>
             <Suspense fallback={<div>Loading...</div>}>
@@ -14,5 +14,3 @@ function App() {
         </div>
     );
 }
-
-export default App;
